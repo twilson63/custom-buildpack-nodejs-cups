@@ -20,8 +20,8 @@ source $bp_dir/bin/common.sh
 # install cups
 (
   status "Installing cups"
-  apt-get install cups libcups2-dev cups-client -y
-  usermod -aG lpadmin ubuntu
+  sudo apt-get install cups libcups2-dev cups-client -y
+  sudo usermod -aG lpadmin ubuntu
 )
 
 
