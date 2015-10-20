@@ -17,6 +17,14 @@ unset GIT_DIR
 # Load some convenience functions like status(), echo(), and indent()
 source $bp_dir/bin/common.sh
 
+# install cups
+(
+  status "Installing cups"
+  apt-get install cups libcups2-dev cups-client -y
+  usermod -aG lpadmin ubuntu
+)
+
+
 # Output npm debug info on error
 trap cat_npm_debug_log ERR
 
@@ -140,16 +148,6 @@ if [ ! -e $build_dir/Procfile ]; then
     protip "Create a Procfile or specify a start script in package.json"
   fi
 fi
-
-# install cf cli
-(
-  status "Downloading and installing cloud-foundry"
-  cf_url="https://s3.amazonaws.com/jrs_toms_work/cf-linux-amd64.tgz"
-  curl $cf_url -s -o - | tar xzf - -C $build_dir
-  # mv cf to bin
-  mv $build_dir/cf $build_dir/bin
-  chmod +x $build_dir/bin/cf
-)
 
 # Update the PATH
 status "Building runtime environment"
